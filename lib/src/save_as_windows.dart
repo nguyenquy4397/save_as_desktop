@@ -15,12 +15,16 @@ class SaveAsWindows extends SaveAsDesktop {
           [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
       
           \$OpenFileDialog = New-Object System.Windows.Forms.SaveFileDialog
-          \$OpenFileDialog.initialDirectory = \$initialDirectory
+          \$OpenFileDialog.Title = "${dialogTitle ?? defaultDialogTitle}"
+          \$OpenFileDialog.initialDirectory = "\$initialDirectory"
           \$OpenFileDialog.FileName = "${fileName ?? ''}"
           \$OpenFileDialog.filter = "${extension != null ? '${extension.toUpperCase()} (*.$extension)| *.$extension' : 'All files (*.*)| *.*'}"
-          \$OpenFileDialog.ShowDialog() |  Out-Null
-      
+          \$result=\$OpenFileDialog.ShowDialog()
+          if(\$result -eq "OK") {
           return \$OpenFileDialog.filename
+          } else {
+          return ""
+          }
         }
 
         \$SaveFile=Save-File ${initialDirectory ?? '\$env:USERPROFILE'}
@@ -29,7 +33,7 @@ class SaveAsWindows extends SaveAsDesktop {
         {
         echo "\$SaveFile"
         } else {
-        echo "No File was chosen"
+        echo ""
         }''';
 
     final processConvertBase64 = await Process.run(
