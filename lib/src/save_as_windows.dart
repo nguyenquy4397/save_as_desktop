@@ -16,6 +16,7 @@ class SaveAsWindows extends SaveAsDesktop {
       
           \$OpenFileDialog = New-Object System.Windows.Forms.SaveFileDialog
           \$OpenFileDialog.initialDirectory = \$initialDirectory
+          \$OpenFileDialog.filename = ${fileName ?? ''}
           \$OpenFileDialog.filter = "${extension != null ? '${extension.toUpperCase()} (*.$extension)| *.$extension' : 'All files (*.*)| *.*'}"
           \$OpenFileDialog.ShowDialog() |  Out-Null
       
@@ -26,7 +27,7 @@ class SaveAsWindows extends SaveAsDesktop {
       
         if (\$SaveFile -ne "")
         {
-        echo "You choose FileName: \$SaveFile"
+        echo "\$SaveFile"
         } else {
         echo "No File was chosen"
         }''';
