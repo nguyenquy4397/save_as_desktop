@@ -16,7 +16,7 @@ class SaveAsWindows extends SaveAsDesktop {
       
           \$OpenFileDialog = New-Object System.Windows.Forms.SaveFileDialog
           \$OpenFileDialog.initialDirectory = \$initialDirectory
-          \$OpenFileDialog.filename = ${fileName ?? ''}
+          \$OpenFileDialog.FileName = "${fileName ?? ''}"
           \$OpenFileDialog.filter = "${extension != null ? '${extension.toUpperCase()} (*.$extension)| *.$extension' : 'All files (*.*)| *.*'}"
           \$OpenFileDialog.ShowDialog() |  Out-Null
       
